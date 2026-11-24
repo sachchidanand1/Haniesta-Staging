@@ -1,0 +1,518 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tokens */
+:root {
+  --color-primary: 20 20 20; /* Text, buttons, etc. */
+  --color-contrast: 250 250 249; /* Backgrounds, borders, etc. */
+  --color-accent: 191 72 0; /* Labels like "On sale" */
+  --font-size-fine: 0.75rem; /* text-xs */
+  --font-size-copy: 1rem; /* text-base */
+  --font-size-lead: 1.125rem; /* text-lg */
+  --font-size-heading: 2rem; /* text-2xl */
+  --font-size-display: 3rem; /* text-4xl */
+  --color-shop-pay: #5a31f4;
+  --color-haniesta-cream: 234 216 187; /* #EAD8BB converted to RGB */
+  --color-haniesta-brown: 70 57 37; /* #463925 converted to RGB */
+  --shop-pay-button--width: 100%; /* Sets the width for the shop-pay-button web component */
+  --height-nav: 3rem;
+  --screen-height: 100vh;
+  --screen-height-dynamic: 100vh;
+  /* Product reviews primary color (to match Projects-Hydrogen-Dummy theme token) */
+  --color-product-reviews: #0f766e; /* fallback emerald tone; override if needed */
+
+  @media (min-width: 32em) {
+    --height-nav: 4rem;
+  }
+  @media (min-width: 48em) {
+    --height-nav: 6rem;
+    --font-size-heading: 2.25rem; /* text-4xl */
+    --font-size-display: 3.75rem; /* text-6xl */
+  }
+  @supports (height: 100svh) {
+    --screen-height: 100svh;
+  }
+  @supports (height: 100dvh) {
+    --screen-height-dynamic: 100dvh;
+  }
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+shop-pay-button {
+  width: 100%;
+  height: 3rem;
+  display: table;
+}
+
+@layer base {
+  * {
+    font-variant-ligatures: none;
+  }
+
+  html, body {
+    font-family: 'Source Sans Pro', ui-sans-serif, system-ui, sans-serif;
+  }
+
+  body {
+    @apply border-primary/10 bg-contrast text-primary/90 antialiased font-sans;
+    background-color: #f1f1f1;
+  }
+
+  /* Use display font for headings and titles across the site */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* Ensure consistent page backgrounds */
+  html, body, #root, main {
+    background-color: #f1f1f1;
+  }
+
+  /* Global card styling to prevent CSS reset during navigation */
+  .flex.flex-col.gap-2,
+  .swimlane .flex.flex-col.gap-2,
+  .featured-collections .flex.flex-col.gap-2,
+  .product-swimlane .flex.flex-col.gap-2 {
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  li.grid.border.rounded,
+  .swimlane li.grid.border.rounded,
+  .featured-collections li.grid.border.rounded {
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Ensure all card images have consistent styling */
+  .card-image,
+  .swimlane .card-image,
+  .featured-collections .card-image,
+  .product-swimlane .card-image {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: clip;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  html {
+    scroll-padding-top: 10rem;
+  }
+
+  model-viewer::part(default-progress-mask) {
+    display: none;
+  }
+
+  model-viewer::part(default-progress-bar) {
+    display: none;
+  }
+
+  input[type='search']::-webkit-search-decoration,
+  input[type='search']::-webkit-search-cancel-button,
+  input[type='search']::-webkit-search-results-button,
+  input[type='search']::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+  }
+
+  a.active {
+    @apply border-b;
+  }
+
+  .prose {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      &:first-child {
+        @apply mt-0;
+      }
+    }
+  }
+}
+
+@layer components {
+  .article {
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply font-cormorant text-primary;
+    }
+    @apply prose mx-auto mb-12 justify-center font-sans text-primary max-w-4xl;
+    display: grid;
+    p,
+    ul,
+    li {
+      @apply mb-4 text-lg;
+    }
+    img {
+      @apply md:-mx-8 lg:-mx-16;
+
+      @media (min-width: 48em) {
+        width: calc(100% + 4rem);
+        max-width: 100vw;
+      }
+      @media (min-width: 64em) {
+        width: calc(100% + 8rem);
+      }
+    }
+  }
+
+  .swimlane {
+    @apply w-full snap-x snap-mandatory scroll-px-6 grid-flow-col justify-start gap-4 overflow-x-scroll px-6 pb-4;
+    display: grid;
+  }
+}
+
+@layer utilities {
+  /* Custom font utility for display font */
+  .font-cormorant {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* Stable system font for navigation to avoid webfont swap flicker */
+  .font-nav {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+      'Segoe UI', sans-serif;
+  }
+
+  .fadeIn {
+    opacity: 0;
+    animation: fadeInAnimation ease 500ms forwards;
+  }
+
+  .hiddenScroll {
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  /* Product shape scaling classes for ProductCard */
+  .scale-round {
+    transform: scale(1.08);
+  }
+
+  .scale-oval {
+    transform: scale(1.05);
+  }
+
+  /* QuickShop modal: prevent cropping for non-rectangular product shapes */
+  .quickshop-contain {
+    object-fit: contain !important;
+    object-position: center !important;
+    padding: 1rem;
+  }
+
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  }
+
+  .strike {
+    position: relative;
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 108%;
+      height: 1.5px;
+      left: -4%;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgb(var(--color-primary));
+      box-shadow: 0.5px 0.5px 0px 0.5px rgb(var(--color-contrast));
+    }
+  }
+
+  .card-image {
+    @apply relative flex items-center justify-center overflow-clip;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    &::before {
+      content: ' ';
+      @apply absolute top-0 left-0 z-10 block h-full w-full shadow-border;
+    }
+    img {
+      @apply aspect-[inherit] w-full object-cover;
+    }
+  }
+
+  /* Target individual product cards - more robust selector with higher specificity */
+  .flex.flex-col.gap-2,
+  div.flex.flex-col.gap-2,
+  main .flex.flex-col.gap-2,
+  [data-test="product-grid"] .flex.flex-col.gap-2 {
+    @apply bg-white p-4;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Target order cards on account page - more robust selector with higher specificity */
+  li.grid.text-center.border.rounded,
+  li.grid.border.rounded,
+  main li.grid.border.rounded,
+  [data-test="order-history"] li.grid.border.rounded {
+    @apply bg-white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Ensure card images maintain styling across all pages */
+  .card-image,
+  main .card-image,
+  [data-test="product-grid"] .card-image,
+  .swimlane .card-image,
+  .featured-collections .card-image,
+  .product-swimlane .card-image {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: clip;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Universal card styling for any context */
+  div[class*="flex"][class*="flex-col"][class*="gap-2"] {
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  li[class*="grid"][class*="border"][class*="rounded"] {
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+}
+
+/* Judge.me widget overrides */
+@layer components {
+  /* Show header to host the write link, but hide widget's own title */
+  .jdgm-rev-widg__title {
+    @apply hidden;
+  }
+  .jdgm-rev-widg__header {
+    @apply flex justify-end mb-2;
+  }
+  .jdgm-write-rev-link {
+    @apply inline-block border border-primary/10 bg-contrast text-primary px-6 py-3 rounded;
+  }
+
+  /* Space and layout tweaks */
+  .jdgm-rev-widg {
+    @apply mt-4;
+  }
+
+  .jdgm-rev-widg__summary {
+    @apply grid gap-6;
+  }
+
+  @media (min-width: 1024px) {
+    .jdgm-rev-widg__summary {
+      grid-template-columns: 1fr 2fr auto;
+      align-items: center;
+    }
+  }
+
+  .jdgm-histogram {
+    @apply my-0 border-x border-primary/10 px-6;
+  }
+
+  /* Review list spacing */
+  .jdgm-rev {
+    @apply border-t border-primary/10 pt-6 mt-6;
+  }
+
+  /* Featured Carousel overrides to match Customer Testimonials UI */
+  .jdgm-featured-carousel {
+    /* scope overrides safely */
+  }
+  .jdgm-featured-carousel, .jdgm-featured-carousel * { box-sizing: border-box; }
+  .jdgm-featured-carousel .jdgm-carousel, .jdgm-featured-carousel .jdgm-carousel-wrapper { width: 100% !important; }
+  .jdgm-featured-carousel .jdgm-carousel,
+  .jdgm-featured-carousel .jdgm-carousel-wrapper {
+    margin-top: 0.5rem;
+  }
+  /* Hide dots, show and style nav arrows */
+  .jdgm-featured-carousel .jdgm-carousel__dots {
+    display: none !important;
+  }
+  .jdgm-featured-carousel .jdgm-carousel__nav {
+    display: flex !important;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+  .jdgm-featured-carousel .jdgm-carousel__prev,
+  .jdgm-featured-carousel .jdgm-carousel__next,
+  .jdgm-featured-carousel [class*="prev"],
+  .jdgm-featured-carousel [class*="next"] {
+    width: 36px;
+    height: 36px;
+    border-radius: 9999px;
+    background: #e5e7eb; /* darker */
+    color: #6b7280; /* darker icon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    cursor: pointer;
+  }
+  .jdgm-featured-carousel .jdgm-carousel__prev:hover,
+  .jdgm-featured-carousel .jdgm-carousel__next:hover,
+  .jdgm-featured-carousel [class*="prev"]:hover,
+  .jdgm-featured-carousel [class*="next"]:hover {
+    background: #d1d5db; /* darker hover */
+    color: #374151; /* darker icon */
+  }
+  /* Individual slide/card */
+  .jdgm-featured-carousel .jdgm-carousel__slide,
+  .jdgm-featured-carousel .jdgm-carousel__item,
+  .jdgm-featured-carousel .jdgm-carousel-item,
+  .jdgm-featured-carousel .jdgm-carousel__slide-inner {
+    background-color: rgba(var(--color-haniesta-cream), 0.4) !important;
+    border: 1px solid rgba(var(--color-haniesta-brown), 0.1) !important;
+    padding: 1.5rem !important; /* ~p-6 */
+    color: rgb(var(--color-haniesta-brown)) !important;
+    text-align: center !important;
+  }
+  /* Remove avatar/product image block per design */
+  .jdgm-featured-carousel .jdgm-carousel__image,
+  .jdgm-featured-carousel .jdgm-carousel-image,
+  .jdgm-featured-carousel .jdgm-product-image,
+  .jdgm-featured-carousel [class*="avatar"],
+  .jdgm-featured-carousel [class*="reviewer-image"],
+  .jdgm-featured-carousel [class*="reviewer_img"] {
+    display: none !important;
+  }
+  /* Stars emerald */
+  .jdgm-featured-carousel .jdgm-carousel__rating,
+  .jdgm-featured-carousel .jdgm-star,
+  .jdgm-featured-carousel .jdgm-star svg,
+  .jdgm-featured-carousel .jdgm-star.jdgm--on {
+    color: var(--color-product-reviews) !important; /* emerald */
+    fill: var(--color-product-reviews) !important;
+  }
+  /* Title + body styles (non-italic per mock) */
+  .jdgm-featured-carousel .jdgm-carousel__title,
+  .jdgm-featured-carousel .jdgm-carousel__body,
+  .jdgm-featured-carousel .jdgm-carousel__review-body {
+    font-style: normal !important;
+    color: rgb(var(--color-haniesta-brown)) !important;
+    word-break: break-word;
+  }
+  .jdgm-featured-carousel .jdgm-carousel__title { font-weight: 700 !important; margin: 0.25rem 0 0.25rem !important; }
+  .jdgm-featured-carousel .jdgm-carousel__rating { margin-bottom: 0.25rem !important; }
+  .jdgm-featured-carousel .jdgm-carousel__body,
+  .jdgm-featured-carousel .jdgm-carousel__review-body { margin-top: 0.25rem !important; }
+  .jdgm-featured-carousel .jdgm-carousel__body,
+  .jdgm-featured-carousel .jdgm-carousel__review-body {
+    opacity: 0.8 !important;
+  }
+  /* Author line */
+  .jdgm-featured-carousel .jdgm-carousel__author,
+  .jdgm-featured-carousel .jdgm-carousel__reviewer,
+  .jdgm-featured-carousel .jdgm-carousel__name {
+    opacity: 0.7 !important;
+    font-size: 0.75rem !important; /* text-xs */
+    margin-top: 1.5rem !important; /* mt-6 */
+  }
+  /* 3-up layout on large screens (when fallback grid is active) */
+  @media (min-width: 1024px) {
+    /* Enforce 3-up even when the slider hydrates */
+    .jdgm-featured-carousel .jdgm-carousel__slide,
+    .jdgm-featured-carousel .jdgm-carousel__item,
+    .jdgm-featured-carousel .jdgm-carousel-item {
+      width: calc(33.333% - 1.333rem) !important;
+    }
+    .jdgm-featured-carousel.jdgm-fallback-grid .jdgm-carousel__slide,
+    .jdgm-featured-carousel.jdgm-fallback-grid .jdgm-carousel__item,
+    .jdgm-featured-carousel.jdgm-fallback-grid .jdgm-carousel-item {
+      width: calc(33.333% - 1.333rem) !important;
+    }
+    .jdgm-featured-carousel.jdgm-fallback-grid .jdgm-carousel__list,
+    .jdgm-featured-carousel.jdgm-fallback-grid .jdgm-carousel__slides {
+      gap: 2rem !important;
+    }
+  }
+
+  /* Fallback layout if slider JS/CSS doesn't hydrate: force responsive grid */
+  .jdgm-featured-carousel.jdgm-fallback-grid .jdgm-carousel__list,
+  .jdgm-featured-carousel.jdgm-fallback-grid .jdgm-carousel__slides {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 2rem !important;
+    transform: none !important;
+  }
+  /* Generic catch-all for older/newer widget structures */
+  .jdgm-featured-carousel.jdgm-fallback-grid [class*="carousel"][class*="list"],
+  .jdgm-featured-carousel.jdgm-fallback-grid [class*="slides"],
+  .jdgm-featured-carousel.jdgm-fallback-grid [class*="track"],
+  .jdgm-featured-carousel.jdgm-fallback-grid [class*="wrap"] {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 2rem !important;
+    transform: none !important;
+    width: 100% !important;
+  }
+  @media (min-width: 768px) {
+    .jdgm-featured-carousel.jdgm-fallback-grid .jdgm-carousel__list,
+    .jdgm-featured-carousel.jdgm-fallback-grid .jdgm-carousel__slides {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .jdgm-featured-carousel.jdgm-fallback-grid [class*="carousel"][class*="list"],
+    .jdgm-featured-carousel.jdgm-fallback-grid [class*="slides"],
+    .jdgm-featured-carousel.jdgm-fallback-grid [class*="track"],
+    .jdgm-featured-carousel.jdgm-fallback-grid [class*="wrap"] {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    .jdgm-featured-carousel.jdgm-fallback-grid .jdgm-carousel__list,
+    .jdgm-featured-carousel.jdgm-fallback-grid .jdgm-carousel__slides {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .jdgm-featured-carousel.jdgm-fallback-grid [class*="carousel"][class*="list"],
+    .jdgm-featured-carousel.jdgm-fallback-grid [class*="slides"],
+    .jdgm-featured-carousel.jdgm-fallback-grid [class*="track"],
+    .jdgm-featured-carousel.jdgm-fallback-grid [class*="wrap"] {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* Clamp excessive text to 3 lines with ellipsis */
+  .jdgm-featured-carousel .jdgm-carousel__body,
+  .jdgm-featured-carousel .jdgm-carousel__review-body {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  /* Limit to first 5 reviews */
+  .jdgm-featured-carousel .jdgm-carousel__slide:nth-of-type(n+6),
+  .jdgm-featured-carousel .jdgm-carousel__item:nth-of-type(n+6),
+  .jdgm-featured-carousel .jdgm-carousel-item:nth-of-type(n+6) {
+    display: none !important;
+  }
+  /* Hide product title lines inside the card if present */
+  .jdgm-featured-carousel .jdgm-product-name,
+  .jdgm-featured-carousel .jdgm-carousel__product,
+  .jdgm-featured-carousel .jdgm-carousel__product-title {
+    display: none !important;
+  }
+}

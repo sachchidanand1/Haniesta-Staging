@@ -1,0 +1,25 @@
+node_modules
+/.DS_Store
+/.cache
+/build
+/dist
+/public/build
+/.mf
+.env
+.vscode
+.shopify
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# Dev-only utility scripts
+/scratch/
+/scripts/
+
+# Backup / duplicate folders
+*- Copy/
+*- Copy
+_experiments_backup/
+homepage_hero_backup/
+_backup*/
+backup*/
